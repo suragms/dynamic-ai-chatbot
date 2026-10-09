@@ -1,0 +1,221 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hi", "Hello", "Hey", "Good morning", "Good afternoon", "Good evening",
+        "Hey there", "Howdy", "Greetings", "Hi chatbot", "Hello assistant",
+        "What's up", "Yo", "Namaste", "Hi there", "Hello friend", "Hey chatbot",
+        "Hi assistant", "Good morning chatbot", "Good evening assistant",
+        "Hey assistant how are you", "Hello there my friend", "Greetings bot"
+      ],
+      "responses": [
+        "Hello! How can I assist you today?",
+        "Hi there! What can I help you with?",
+        "Greetings! How may I be of service today?"
+      ]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": [
+        "Bye", "Goodbye", "See you later", "Catch you later", "Farewell",
+        "I must go now", "End conversation", "Quit", "Exit", "Have a good day",
+        "Bye bye", "See ya", "Talk to you later", "Bye for now", "I'm leaving",
+        "Have a nice day", "Good night", "Catch ya later", "Disconnect chat"
+      ],
+      "responses": [
+        "Goodbye! Have a fantastic day ahead!",
+        "Farewell! Feel free to reach out anytime.",
+        "See you later! Take care!"
+      ]
+    },
+    {
+      "tag": "thanks",
+      "patterns": [
+        "Thank you", "Thanks", "Thanks a lot", "Thank you so much",
+        "Appreciate it", "Much appreciated", "Awesome thanks", "Thank you for your help",
+        "You are very helpful", "Thanks for assisting me", "Thank you bot",
+        "Many thanks", "That helped a lot thanks", "Thanks for the quick response"
+      ],
+      "responses": [
+        "You're very welcome! Glad I could help.",
+        "Anytime! Let me know if you need anything else.",
+        "Happy to assist! Have a great time."
+      ]
+    },
+    {
+      "tag": "help",
+      "patterns": [
+        "Help me", "I need help", "Can you help me", "Assistance needed",
+        "How do I use this", "Give me a hand", "I'm stuck", "Can you guide me",
+        "Please help me out", "Need assistance", "Can somebody help me",
+        "What can I ask for help with", "Guide me please", "I require help"
+      ],
+      "responses": [
+        "I'm here to help! What topic or problem would you like assistance with?",
+        "How can I assist you? You can ask me technical questions, general queries, or AI topics."
+      ]
+    },
+    {
+      "tag": "capabilities",
+      "patterns": [
+        "What can you do?", "What are your features?", "Who are you?",
+        "What is your purpose?", "Show me what you can do", "Tell me about yourself",
+        "What features do you have?", "List your capabilities", "What are your skills",
+        "How can you assist me", "What functions do you support", "Explain your features"
+      ],
+      "responses": [
+        "I am a Dynamic AI Chatbot featuring intent recognition, sentiment analysis, NER, context memory, and generative response capabilities powered by Google Gemini!"
+      ]
+    },
+    {
+      "tag": "weather",
+      "patterns": [
+        "What is the weather today?", "Is it going to rain?", "How's the weather in Kochi?",
+        "Will it be sunny tomorrow?", "Tell me the weather forecast", "Is it cold outside?",
+        "Temperature update", "What is the climate like today", "Is it raining outside",
+        "How hot is it today", "Weather prediction for today"
+      ],
+      "responses": [
+        "I don't have real-time live sensor weather streams currently connected, but you can check your local weather app or ask me general atmospheric science questions!"
+      ]
+    },
+    {
+      "tag": "time",
+      "patterns": [
+        "What time is it?", "Tell me the current time", "Do you have the clock time?",
+        "What's the time right now?", "Current time please", "What is the exact time",
+        "Could you tell me the time", "What time is it in local time"
+      ],
+      "responses": [
+        "I can check temporal timestamps in our chat logs! The current time is available on your device header."
+      ]
+    },
+    {
+      "tag": "date",
+      "patterns": [
+        "What day is it today?", "What is today's date?", "Tell me current date",
+        "What day of the week is it?", "Date today", "What is the date today",
+        "Which day is it today", "Tell me today's date"
+      ],
+      "responses": [
+        "Today's date is tracked via system context in our conversation memory!"
+      ]
+    },
+    {
+      "tag": "general_question",
+      "patterns": [
+        "What is the capital of France?", "Who wrote Hamlet?", "Why is the sky blue?",
+        "How many continents are there?", "What is photosynthesis?", "Explain relativity",
+        "Tell me a fun fact", "How does gravity work?", "Who discovered electricity?",
+        "What is the largest ocean on Earth?", "Why do birds migrate?"
+      ],
+      "responses": [
+        "That is a great general knowledge question! Let me provide an informative answer."
+      ]
+    },
+    {
+      "tag": "technical_question",
+      "patterns": [
+        "How does a REST API work?", "Explain Docker containers", "What is SQL join?",
+        "Difference between GET and POST", "How does Git version control work?",
+        "Explain web sockets", "What is microservice architecture?", "How does CI/CD work?",
+        "What is a database index?", "Explain HTTPS security"
+      ],
+      "responses": [
+        "Here is a technical overview to answer your query."
+      ]
+    },
+    {
+      "tag": "python",
+      "patterns": [
+        "Help me with Python", "How to create a list in Python?", "What is a decorator in Python?",
+        "Explain Python list comprehension", "How do virtual environments work in Python?",
+        "Python dictionary methods", "Fix my Python code", "How to install packages with pip?",
+        "What is asyncio in Python?", "How to use kwargs in Python"
+      ],
+      "responses": [
+        "Python is a versatile programming language! Let me assist with your Python code or concept."
+      ]
+    },
+    {
+      "tag": "machine_learning",
+      "patterns": [
+        "Explain machine learning", "What is supervised learning?", "Difference between regression and classification",
+        "What is random forest?", "Explain neural networks", "How does gradient descent work?",
+        "What is overfitting in ML?", "Tell me about scikit-learn", "What is deep learning?",
+        "Explain support vector machines"
+      ],
+      "responses": [
+        "Machine Learning enables algorithms to learn patterns from data to make predictions or decisions!"
+      ]
+    },
+    {
+      "tag": "data_science",
+      "patterns": [
+        "What is data science?", "Explain data cleaning with pandas", "How to perform exploratory data analysis?",
+        "What is feature engineering?", "Difference between data science and data analytics",
+        "How to handle missing values in pandas?", "Explain data visualization",
+        "What is numpy used for", "Explain data preprocessing"
+      ],
+      "responses": [
+        "Data science combines domain knowledge, programming, and statistics to extract insights from raw data!"
+      ]
+    },
+    {
+      "tag": "complaint",
+      "patterns": [
+        "Your response was bad", "This chatbot isn't working properly", "I am unsatisfied with the answer",
+        "This is confusing and unhelpful", "Why did you give me wrong information?",
+        "Fix this issue immediately", "Terrible experience", "Your answer is completely wrong",
+        "I am angry about this response"
+      ],
+      "responses": [
+        "I understand your frustration. Let me re-analyze your query and provide a clearer, more accurate response."
+      ]
+    },
+    {
+      "tag": "positive_feedback",
+      "patterns": [
+        "Great answer!", "You are amazing", "Excellent explanation",
+        "That solved my problem perfectly", "Awesome chatbot", "Very intelligent bot",
+        "Loved your response", "Great job chatbot", "You are super helpful"
+      ],
+      "responses": [
+        "Thank you so much! I'm thrilled that my response was helpful to you!"
+      ]
+    },
+    {
+      "tag": "negative_feedback",
+      "patterns": [
+        "That's wrong", "Incorrect answer", "I don't like this answer",
+        "This makes no sense", "Useless response", "Not what I asked for",
+        "That is not correct", "Bad response"
+      ],
+      "responses": [
+        "I apologize for the inaccuracy. Let me rethink this and assist you better."
+      ]
+    },
+    {
+      "tag": "account_help",
+      "patterns": [
+        "How do I reset my settings?", "Where is my chat history?", "How to export conversation?",
+        "How to change theme?", "Where are the settings?", "How to clear chat history?",
+        "How to change response language", "Where can I switch dark mode"
+      ],
+      "responses": [
+        "You can manage your settings, themes, export options, and conversation history directly from the top navigation panel or settings button!"
+      ]
+    },
+    {
+      "tag": "fallback",
+      "patterns": [
+        "qwertyuiop", "asdfghjkl", "zxcvbnm", "1234567890", "blah blah blah",
+        "hmmm", "xyzabc", "foobar", "unknown query", "random text string"
+      ],
+      "responses": [
+        "I'm not quite sure I understood that. Could you rephrase your question?"
+      ]
+    }
+  ]
+}
