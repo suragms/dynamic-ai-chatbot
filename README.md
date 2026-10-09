@@ -5,7 +5,7 @@
 [![TypeScript](https://img.shields.io/badge/typescript-5.5.3-blue.svg)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/vite-5.4.2-646CFF.svg)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/tailwindcss-3.4.1-38B2AC.svg)](https://tailwindcss.com/)
-[![License: zidiosurag](https://img.shields.io/badge/License-zidiosurag-green.svg)](LICENSE)
+[![License: ZidioSurag](https://img.shields.io/badge/License-ZidioSurag-green.svg)](LICENSE)
 [![Zidio Internship](https://img.shields.io/badge/Zidio_Development_Internship-Team_17-orange.svg)](https://zidio.in/p/6a5f954e247c6d64ce2e4b9d)
 
 > **Zidio Development Internship – Team 17 Final Project**, individually built by **Surag** without team development support. A Dynamic AI Chatbot featuring NLP, machine learning, sentiment analysis, intent recognition, contextual memory, Gemini AI, analytics, and multilingual conversational capabilities.
@@ -602,4 +602,4 @@ A comprehensive 13-point security audit was conducted. Full audit findings and h
 
 ## License
 
-This project is licensed under the **zidiosurag** License. See [LICENSE](LICENSE) for details.
+This project is licensed under the **ZidioSurag** License. See [LICENSE](LICENSE) for details.
