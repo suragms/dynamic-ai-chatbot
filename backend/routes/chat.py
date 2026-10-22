@@ -8,6 +8,7 @@ logger = logging.getLogger(__name__)
 chat_bp = Blueprint("chat", __name__)
 
 @chat_bp.route("/api/chat", methods=["POST"])
+@chat_bp.route("/chat", methods=["POST"])
 def chat():
     """
     Main Chat API Endpoint.

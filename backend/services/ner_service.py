@@ -1,5 +1,8 @@
 import re
-import spacy
+try:
+    import spacy
+except Exception:
+    spacy = None
 
 class NERService:
     """
@@ -9,17 +12,13 @@ class NERService:
     """
 
     def __init__(self):
-        try:
-            self.nlp = spacy.load("en_core_web_sm")
-            print("[+] Loaded spaCy 'en_core_web_sm' model for NER.")
-        except Exception:
+        self.nlp = None
+        if spacy is not None:
             try:
-                # Fallback download attempt
-                spacy.cli.download("en_core_web_sm")
                 self.nlp = spacy.load("en_core_web_sm")
+                print("[+] Loaded spaCy 'en_core_web_sm' model for NER.")
             except Exception:
-                print("[!] spaCy model 'en_core_web_sm' not installed. Using rule-based fallback NER.")
-                self.nlp = None
+                print("[!] spaCy model 'en_core_web_sm' not loaded. Using rule-based fallback NER.")
 
     def extract_entities(self, text: str) -> list[dict]:
         """

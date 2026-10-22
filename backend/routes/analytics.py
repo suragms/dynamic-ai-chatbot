@@ -8,6 +8,7 @@ from backend.models.message import Message
 analytics_bp = Blueprint("analytics", __name__)
 
 @analytics_bp.route("/api/analytics/summary", methods=["GET"])
+@analytics_bp.route("/analytics/summary", methods=["GET"])
 def get_analytics_summary():
     """
     Returns KPI summary metrics across all conversations and messages.
@@ -82,6 +83,7 @@ def get_analytics_summary():
     }), 200
 
 @analytics_bp.route("/api/analytics/sentiment", methods=["GET"])
+@analytics_bp.route("/analytics/sentiment", methods=["GET"])
 def get_sentiment_analytics():
     """
     Returns sentiment breakdown across all user messages.
@@ -111,6 +113,7 @@ def get_sentiment_analytics():
     }), 200
 
 @analytics_bp.route("/api/analytics/intents", methods=["GET"])
+@analytics_bp.route("/analytics/intents", methods=["GET"])
 def get_intent_analytics():
     """
     Returns distribution of detected intent categories and top/most common intents.
@@ -138,6 +141,7 @@ def get_intent_analytics():
     }), 200
 
 @analytics_bp.route("/api/analytics/performance", methods=["GET"])
+@analytics_bp.route("/analytics/performance", methods=["GET"])
 def get_performance_analytics():
     """
     Returns latency statistics, response-time trend, messages over time, provider stats, and language usage.

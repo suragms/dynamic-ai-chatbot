@@ -7,6 +7,7 @@ from backend.services.memory_service import memory_service
 export_bp = Blueprint("export", __name__)
 
 @export_bp.route("/api/export", methods=["POST"])
+@export_bp.route("/export", methods=["POST"])
 def export_chat():
     """
     Exports conversation history in JSON, CSV, or TXT format.

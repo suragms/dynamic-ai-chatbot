@@ -4,6 +4,7 @@ from backend.services.memory_service import memory_service
 conversations_bp = Blueprint("conversations", __name__)
 
 @conversations_bp.route("/api/conversations/<session_id>", methods=["GET"])
+@conversations_bp.route("/conversations/<session_id>", methods=["GET"])
 def get_conversation(session_id):
     """Retrieve full chronological conversation history for a given session_id."""
     history = memory_service.get_history(session_id, max_messages=100)
@@ -15,6 +16,7 @@ def get_conversation(session_id):
     }), 200
 
 @conversations_bp.route("/api/conversations/<session_id>", methods=["DELETE"])
+@conversations_bp.route("/conversations/<session_id>", methods=["DELETE"])
 def delete_conversation(session_id):
     """Clear and delete all stored messages for a session_id."""
     cleared = memory_service.clear_history(session_id)

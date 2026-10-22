@@ -18,8 +18,11 @@ class IntentService:
     def load_model(self):
         """Loads model artifact from disk or trains if missing."""
         if not config.MODEL_PATH.exists():
-            print("[!] Intent model artifact not found. Training model now...")
-            train_and_evaluate_models()
+            print("[!] Intent model artifact not found.")
+            try:
+                train_and_evaluate_models()
+            except Exception as e:
+                print(f"[!] Could not train model automatically: {e}")
 
         try:
             payload = joblib.load(config.MODEL_PATH)
