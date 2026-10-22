@@ -66,6 +66,15 @@ export const api = {
     return res.json();
   },
 
+  async seedAnalyticsData(): Promise<{ seeded: boolean; message: string }> {
+    const res = await fetch(`${API_BASE}/analytics/seed`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+    });
+    if (!res.ok) throw new Error('Failed to seed analytics data');
+    return res.json();
+  },
+
   async exportChat(sessionId: string, format: 'json' | 'csv' | 'txt') {
     const res = await fetch(`${API_BASE}/export`, {
       method: 'POST',

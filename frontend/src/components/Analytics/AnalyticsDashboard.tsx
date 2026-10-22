@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Activity, AlertTriangle, BarChart3, Calendar, CheckCircle2, Clock, Cpu, Globe2, MessageSquare, PieChart as PieIcon, RefreshCw, ShieldAlert, Users } from 'lucide-react';
+import { Activity, AlertTriangle, BarChart3, Calendar, CheckCircle2, Clock, Cpu, Globe2, MessageSquare, PieChart as PieIcon, RefreshCw, ShieldAlert, Sparkles, Users } from 'lucide-react';
 import { Bar, BarChart, CartesianGrid, Cell, Legend, Line, LineChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { api } from '../../services/api';
 import { AnalyticsIntents, AnalyticsPerformance, AnalyticsSentiment, AnalyticsSummary } from '../../types';
@@ -19,8 +19,10 @@ export const AnalyticsDashboard: React.FC = () => {
   const [intents, setIntents] = useState<AnalyticsIntents | null>(null);
   const [performance, setPerformance] = useState<AnalyticsPerformance | null>(null);
   const [loading, setLoading] = useState(true);
+  const [seeding, setSeeding] = useState(false);
   const [error, setError] = useState(false);
   const [attempt, setAttempt] = useState(0);
+
   useEffect(() => {
     let active = true;
     setLoading(true); setError(false);
@@ -30,6 +32,19 @@ export const AnalyticsDashboard: React.FC = () => {
       .finally(() => { if (active) setLoading(false); });
     return () => { active = false; };
   }, [attempt]);
+
+  const handleSeedData = async () => {
+    try {
+      setSeeding(true);
+      await api.seedAnalyticsData();
+      setAttempt(previous => previous + 1);
+    } catch (e) {
+      console.error('Failed to seed analytics data', e);
+    } finally {
+      setSeeding(false);
+    }
+  };
+
   const sentimentData = sentiment ? Object.entries(sentiment.distribution).map(([name, value]) => ({ name, value, color: name === 'positive' ? '#88b9a8' : name === 'negative' ? '#ce8c9f' : '#8a96b1' })).filter(item => item.value > 0) : [];
   const intentData = intents ? Object.entries(intents.intents).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([name, count]) => ({ name: name.replace(/_/g, ' '), count })) : [];
   const trend = performance?.response_time_trend.map((point, index) => ({ ...point, response: index + 1 })) || [];
@@ -45,10 +60,56 @@ export const AnalyticsDashboard: React.FC = () => {
     { icon: ShieldAlert, label: 'Fallback usage', value: hasResponses ? `${summary.fallback_rate}%` : '—', detail: `${summary.fallback_calls} local fallback responses` },
   ] : [];
   return <div className="workspace-page analytics-workspace" aria-busy={loading}>
-    <div className="ws-page-heading heading-with-action"><div><span className="ws-eyebrow">CONVERSATIONAL INSIGHTS</span><h1>Every conversation<br /><span>tells a story.</span></h1><p>Explore intent, sentiment, and response performance from your conversation database.</p></div><div className="analytics-heading-actions"><span className="ws-data-label"><i />Backend data</span><button type="button" className="ws-button" disabled={loading} onClick={() => setAttempt(previous => previous + 1)}><RefreshCw size={14} className={loading ? 'ws-spin' : ''} />Refresh data</button></div></div>
+    <div className="ws-page-heading heading-with-action">
+      <div>
+        <span className="ws-eyebrow">CONVERSATIONAL INSIGHTS</span>
+        <h1>Every conversation<br /><span>tells a story.</span></h1>
+        <p>Explore intent, sentiment, and response performance from your conversation database.</p>
+      </div>
+      <div className="analytics-heading-actions">
+        <span className="ws-data-label"><i />Backend data</span>
+        <button
+          type="button"
+          className="ws-button"
+          disabled={loading || seeding}
+          onClick={handleSeedData}
+          title="Populate or reload realistic demo conversation metrics"
+        >
+          <Sparkles size={14} className={seeding ? 'ws-spin' : ''} />
+          {seeding ? 'Loading sample...' : 'Load sample data'}
+        </button>
+        <button
+          type="button"
+          className="ws-button"
+          disabled={loading}
+          onClick={() => setAttempt(previous => previous + 1)}
+        >
+          <RefreshCw size={14} className={loading ? 'ws-spin' : ''} />
+          Refresh data
+        </button>
+      </div>
+    </div>
     {loading ? <div className="dashboard-loading" role="status"><RefreshCw size={24} className="ws-spin" /><h2>Reading your conversation insights…</h2><p>Fetching metrics from the project backend.</p></div> : error ? <div className="ws-panel dashboard-error" role="status"><AlertTriangle size={28} /><h2>Let’s reconnect the insights.</h2><p>The analytics backend is unavailable. Start the Flask server and try again.</p><button type="button" className="ws-button primary" onClick={() => setAttempt(previous => previous + 1)}><RefreshCw size={14} />Retry connection</button></div> : <>
       <div className="dashboard-metrics">{metrics.map(({ icon: Icon, label, value, detail }) => <article className="ws-panel dashboard-metric" key={label}><div><span>{label}</span><Icon size={17} /></div><strong>{value}</strong><p>{detail}</p></article>)}</div>
-      {summary?.total_messages === 0 && <div className="dashboard-empty-banner"><SparkleMessage /><div><strong>A fresh start for your insights.</strong><p>Send a message in Chat to begin recording conversations and analysis.</p></div></div>}
+      {summary?.total_messages === 0 && (
+        <div className="dashboard-empty-banner">
+          <SparkleMessage />
+          <div>
+            <strong>A fresh start for your insights.</strong>
+            <p>Send a message in Chat or populate sample conversation data.</p>
+          </div>
+          <button
+            type="button"
+            className="ws-button primary"
+            style={{ marginLeft: 'auto' }}
+            disabled={seeding}
+            onClick={handleSeedData}
+          >
+            <Sparkles size={14} />
+            {seeding ? 'Populating...' : 'Populate sample data'}
+          </button>
+        </div>
+      )}
       <div className="dashboard-charts">
         <ChartCard icon={Calendar} title="Messages over time" detail="Daily message volume" available={daily.length > 0}><ResponsiveContainer width="100%" height="100%"><BarChart data={daily} margin={{ left: -15, top: 15, right: 5 }}><CartesianGrid vertical={false} stroke="var(--ws-line)" strokeDasharray="3 5" /><XAxis dataKey="date" {...axis} /><YAxis {...axis} allowDecimals={false} /><Tooltip {...tooltip} cursor={{ fill: 'var(--ws-hover)' }} /><Legend wrapperStyle={legend} verticalAlign="top" height={32} /><Bar dataKey="user" name="User" fill={colors[0]} radius={[4, 4, 0, 0]} isAnimationActive={false} /><Bar dataKey="assistant" name="Assistant" fill={colors[1]} radius={[4, 4, 0, 0]} isAnimationActive={false} /></BarChart></ResponsiveContainer></ChartCard>
         <ChartCard icon={PieIcon} title="Sentiment distribution" detail={`${sentiment?.total_analyzed ?? 0} messages analyzed`} available={sentimentData.length > 0}><ResponsiveContainer width="100%" height="100%"><PieChart><Pie data={sentimentData} innerRadius={62} outerRadius={88} paddingAngle={4} dataKey="value" stroke="none" isAnimationActive={false}>{sentimentData.map(item => <Cell key={item.name} fill={item.color} />)}</Pie><Tooltip {...tooltip} /><Legend wrapperStyle={{ ...legend, textTransform: 'capitalize' }} /></PieChart></ResponsiveContainer></ChartCard>

@@ -25,6 +25,13 @@ def get_analytics_summary():
     - local_fallback_calls & local_fallback_percentage
     - intent_engine_calls
     """
+    if Conversation.query.count() == 0:
+        try:
+            from backend.seed_data import seed_analytics_data
+            seed_analytics_data(force=False)
+        except Exception:
+            pass
+
     total_conversations = Conversation.query.count()
     total_messages = Message.query.count()
     user_messages = Message.query.filter_by(role="user").count()
@@ -214,3 +221,13 @@ def get_performance_analytics():
         "provider_distribution": provider_counts,
         "language_usage": language_usage
     }), 200
+
+@analytics_bp.route("/api/analytics/seed", methods=["GET", "POST"])
+@analytics_bp.route("/analytics/seed", methods=["GET", "POST"])
+def seed_analytics_endpoint():
+    """Seed or refresh dataset for analytics demonstration."""
+    from backend.seed_data import seed_analytics_data
+    from flask import request
+    force = request.args.get("force", "false").lower() == "true" or request.method == "POST"
+    result = seed_analytics_data(force=force)
+    return jsonify(result), 200
