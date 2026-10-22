@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowLeft, BarChart3, Bot, Info, Moon, Settings, Sun } from 'lucide-react';
 import { AppSettings, HealthStatus } from '../types';
+import { GeminiLogo } from './GeminiLogo';
 
 interface HeaderProps {
   activeTab: 'chat' | 'analytics' | 'about';
@@ -16,7 +17,10 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, setSett
   const tabs = [{ id: 'chat', label: 'Chat', icon: Bot }, { id: 'analytics', label: 'Analytics', icon: BarChart3 }, { id: 'about', label: 'About', icon: Info }] as const;
   return <header className="workspace-header">
     <div className="workspace-header-inner">
-      <a className="workspace-brand" href="#home" aria-label="Back to landing page"><span className="workspace-logo"><Bot size={22} /></span><span>Dynamic AI<span className="workspace-brand-subtitle">CHATBOT WORKSPACE</span></span></a>
+      <a className="workspace-brand" href="#home" aria-label="Back to landing page">
+        <span className="gemini-header-logo"><GeminiLogo size={24} /></span>
+        <span>Gemini AI<span className="workspace-brand-subtitle">STUDIO WORKSPACE</span></span>
+      </a>
       <nav className="workspace-tabs" aria-label="Workspace navigation">{tabs.map(({ id, label, icon: Icon }) => <button type="button" key={id} aria-label={`Open ${label} view`} aria-current={activeTab === id ? 'page' : undefined} className={activeTab === id ? 'selected' : ''} onClick={() => setActiveTab(id)}><Icon size={15} />{label}</button>)}</nav>
       <div className="workspace-header-tools">
         <span className={`workspace-connection ${health ? 'connected' : 'unavailable'}`} title={health?.gemini_api_configured ? 'The key is configured. Live Gemini connectivity is unverified.' : health ? 'Backend connected. Local NLP responses are available.' : 'Start the Flask backend to enable chat.'}><i />{health ? (health.gemini_api_configured ? 'Gemini configured' : 'Local NLP mode') : 'Backend unavailable'}</span>

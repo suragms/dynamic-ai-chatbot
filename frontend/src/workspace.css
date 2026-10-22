@@ -158,3 +158,957 @@
 @media (max-width:620px) { .workspace-header-inner { width:calc(100% - 30px); min-height:105px; flex-wrap:wrap; gap:10px; padding:12px 0 10px; }.workspace-brand { font-size:14px; }.workspace-logo { width:34px; height:34px; }.workspace-brand-subtitle { font-size:7px; letter-spacing:1.4px; }.workspace-header-tools { order:1; margin-left:auto; gap:7px; }.workspace-header-tools .ws-icon-button { width:31px; height:31px; }.workspace-home { display:none; }.workspace-tabs { order:2; width:100%; border:0; padding:0; background:none; gap:6px; }.workspace-tabs button { flex:1; padding:7px 10px; font-size:10px; }.chat-layout { width:100%; margin:0; gap:0; }.conversation-panel { border:0; border-radius:0; box-shadow:none; }.conversation-panel-heading { padding:14px 18px; gap:8px; }.conversation-panel-heading h1 { font-size:12px; }.conversation-panel-heading .ws-eyebrow { font-size:7px; }.conversation-mode { font-size:8px; }.conversation-feed { padding:20px 18px; }.chat-welcome { padding:8px 0; }.welcome-symbol { width:45px; height:45px; border-radius:12px; margin-bottom:16px; }.chat-welcome .ws-eyebrow { font-size:8px; letter-spacing:1.2px; }.chat-welcome h2 { font-size:27px; margin-top:10px; }.chat-welcome > p { font-size:11px; margin-block:13px 20px; }.chat-starters { gap:9px; }.chat-starters button { padding:13px 11px; }.starter-heading { font-size:9px; gap:6px; }.starter-heading > svg { width:14px; }.starter-heading > svg:last-child { display:none; }.starter-description { font-size:9px; margin-top:7px; }.welcome-note { margin-top:17px; font-size:8px; }.conversation-compose { padding:0 16px 12px; }.quick-suggestions { gap:8px; padding-top:10px; }.quick-suggestions > span { font-size:8px; }.quick-suggestions button { font-size:8px; }.chat-input-box { padding-left:12px; gap:6px; }.chat-input-box textarea { font-size:11px; }.composer-shortcut-detail { display:none; }.composer-toolbar { gap:10px; font-size:8px; }.composer-toolbar > div { gap:12px; }.composer-toolbar button { font-size:8px; }.composer-note { font-size:7px; }.conversation-message { gap:8px; margin-bottom:24px; }.message-avatar { width:27px; height:27px; border-radius:7px; }.message-body { max-width:calc(100% - 35px); width:calc(100% - 35px); }.message-bubble { font-size:11px; padding:13px; }.user-message { max-width:95%; }.message-performance { font-size:7px; }.analysis-tag { font-size:8px; }.message-author-line { font-size:7px; }.typing-indicator { gap:8px; }.typing-indicator > div { gap:9px; padding:12px; font-size:9px; }.workspace-page { padding:30px 18px 40px; }.ws-page-heading { margin-bottom:25px; }.ws-page-heading h1 { font-size:29px; letter-spacing:-.8px; }.ws-page-heading p { font-size:11px; }.ws-eyebrow { font-size:8px; letter-spacing:1.2px; }.analytics-heading-actions { width:100%; justify-content:space-between; }.dashboard-metrics { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }.dashboard-metric { padding:18px 14px; }.dashboard-metric strong { font-size:24px; }.dashboard-metric p { font-size:8px; line-height:1.8; }.dashboard-metrics .dashboard-metric:last-child { grid-column:1/-1; }.dashboard-charts { grid-template-columns:minmax(0,1fr); gap:15px; }.dashboard-chart-canvas { height:225px; }.chart-card-heading h2 { font-size:11px; }.dashboard-empty-banner { padding:16px; gap:12px; }.dashboard-note { font-size:9px; }.common-intents { padding:20px 16px; }.common-intents > div { grid-template-columns:repeat(2,1fr); gap:9px; }.dashboard-error,.dashboard-loading { padding:24px 18px; min-height:310px; }.dashboard-error h2,.dashboard-loading h2 { font-size:16px; }.dashboard-error p,.dashboard-loading p { font-size:11px; }.settings-overlay { padding:12px; }.settings-dialog { max-height:calc(100dvh - 24px); }.settings-heading { padding:20px 19px 12px; gap:10px; }.settings-heading h2 { font-size:16px; }.settings-heading .ws-eyebrow { font-size:6px; letter-spacing:.8px; }.settings-description { padding:0 19px 18px; font-size:9px; }.settings-body { padding:20px 19px; }.settings-footer { padding:16px 19px; gap:10px; }.settings-footer .ws-button { font-size:10px; padding:8px 10px; }.settings-footer .ws-text-button { font-size:9px; }.about-introduction { padding:22px; gap:15px; align-items:flex-start; }.about-introduction .workspace-logo { width:40px; height:40px; border-radius:10px; }.about-introduction h2 { font-size:17px; }.about-introduction p { font-size:11px; }.system-status-grid { gap:12px; }.status-card { padding:20px 16px; }.status-card .ws-eyebrow { font-size:7px; margin-top:15px; }.status-card h3 { font-size:12px; }.status-card p { font-size:9px; }.routing-cards { grid-template-columns:1fr; gap:12px; }.routing-card { padding:22px; }.routing-card h3 { font-size:14px; }.routing-card p { font-size:11px; }.ws-section-heading h2 { font-size:17px; }.about-stack-grid { grid-template-columns:1fr; gap:15px; }.about-stack { padding:23px; }.workspace-developer { padding:23px; gap:17px; }.workspace-developer > div:nth-child(2) { width:calc(100% - 73px); }.workspace-developer h2 { font-size:15px; }.workspace-developer p { font-size:10px; }.workspace-developer-links { margin-left:0; }.workspace-developer .ws-eyebrow { font-size:7px; letter-spacing:.7px; } }
 @media (max-height:820px) and (min-width:621px) { .welcome-symbol { display:none; }.chat-welcome { padding:2px 0; }.chat-welcome h2 { font-size:27px; margin-top:10px; }.chat-welcome > p { margin-block:12px 17px; }.chat-starters button { padding:11px 13px; }.welcome-note { margin-top:15px; }.conversation-feed { padding-block:20px; } }
 @media (prefers-reduced-motion:reduce) { .workspace *, .workspace *::before, .workspace *::after { animation:none !important; transition:none !important; scroll-behavior:auto !important; } }
+
+/* ========================================================
+   GOOGLE GEMINI DESIGN SYSTEM STYLES
+   ======================================================== */
+:root {
+  --gemini-bg: #131314;
+  --gemini-surface: #1e1f20;
+  --gemini-surface-variant: #282a2c;
+  --gemini-border: rgba(255, 255, 255, 0.08);
+  --gemini-text: #e3e3e3;
+  --gemini-subtext: #c4c7c5;
+  --gemini-user-bubble: #282a2c;
+  --gemini-card-bg: #1e1f20;
+  --gemini-card-border: rgba(255, 255, 255, 0.08);
+  --gemini-card-hover: #26282a;
+  --gemini-capsule-bg: #1e1f20;
+  --gemini-capsule-border: rgba(255, 255, 255, 0.14);
+}
+
+.workspace[data-theme='light'] {
+  --gemini-bg: #ffffff;
+  --gemini-surface: #f0f4f9;
+  --gemini-surface-variant: #e1e3e1;
+  --gemini-border: rgba(0, 0, 0, 0.08);
+  --gemini-text: #1f1f1f;
+  --gemini-subtext: #444746;
+  --gemini-user-bubble: #f0f4f9;
+  --gemini-card-bg: #f0f4f9;
+  --gemini-card-border: rgba(0, 0, 0, 0.08);
+  --gemini-card-hover: #e5ebf3;
+  --gemini-capsule-bg: #f0f4f9;
+  --gemini-capsule-border: rgba(0, 0, 0, 0.12);
+}
+
+.gemini-header-logo {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--gemini-surface);
+  border: 1px solid var(--gemini-border);
+  flex-shrink: 0;
+}
+
+/* Central Layout */
+.gemini-chat-layout {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  position: relative;
+  background: var(--gemini-bg);
+  overflow: hidden;
+}
+
+.gemini-main-stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Stage Header */
+.gemini-stage-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--gemini-border);
+  background: var(--gemini-bg);
+  flex-shrink: 0;
+}
+
+.gemini-header-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gemini-model-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  background: var(--gemini-surface);
+  border: 1px solid var(--gemini-border);
+  border-radius: 18px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--gemini-text);
+}
+
+.gemini-live-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  color: var(--gemini-subtext);
+}
+
+.gemini-live-indicator i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34a853;
+}
+
+.gemini-live-indicator.local i {
+  background: #fbbc04;
+}
+
+.gemini-sidebar-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: var(--gemini-surface);
+  border: 1px solid var(--gemini-border);
+  color: var(--gemini-subtext);
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.gemini-sidebar-toggle-btn:hover {
+  background: var(--gemini-surface-variant);
+  color: var(--gemini-text);
+}
+
+/* Chat Feed */
+.gemini-chat-feed {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.gemini-chat-feed.is-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Gemini Welcome State */
+.gemini-welcome-container {
+  max-width: 820px;
+  width: 100%;
+  margin: auto;
+  padding: 40px 24px;
+}
+
+.gemini-welcome-header {
+  margin-bottom: 36px;
+}
+
+.gemini-sparkle-halo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  border-radius: 20px;
+  background: radial-gradient(circle, rgba(155, 114, 203, 0.25) 0%, transparent 70%);
+  margin-bottom: 20px;
+}
+
+.gemini-welcome-title {
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: 500;
+  line-height: 1.15;
+  letter-spacing: -1.2px;
+  color: var(--gemini-text);
+  margin: 0 0 12px;
+}
+
+.gemini-gradient-text {
+  background: linear-gradient(74deg, #4285f4 0%, #9b72cb 35%, #d96570 65%, #ffa07a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+}
+
+.gemini-welcome-subtitle {
+  font-size: 14px;
+  color: var(--gemini-subtext);
+  max-width: 540px;
+  line-height: 1.6;
+}
+
+.gemini-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.gemini-starter-card {
+  background: var(--gemini-card-bg);
+  border: 1px solid var(--gemini-card-border);
+  border-radius: 16px;
+  padding: 18px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 130px;
+}
+
+.gemini-starter-card:hover {
+  background: var(--gemini-card-hover);
+  transform: translateY(-2px);
+  border-color: rgba(155, 114, 203, 0.3);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.14);
+}
+
+.gemini-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.gemini-card-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  background: var(--gemini-surface-variant);
+  color: #a8c7fa;
+}
+
+.gemini-card-arrow {
+  color: var(--gemini-subtext);
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.gemini-starter-card:hover .gemini-card-arrow {
+  opacity: 1;
+  color: var(--gemini-text);
+}
+
+.gemini-card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gemini-text);
+  margin-bottom: 6px;
+}
+
+.gemini-card-desc {
+  font-size: 11px;
+  color: var(--gemini-subtext);
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Messages Column */
+.gemini-messages-column {
+  max-width: 820px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.gemini-message-row {
+  width: 100%;
+  display: flex;
+}
+
+.gemini-message-inner {
+  display: flex;
+  gap: 16px;
+  width: 100%;
+}
+
+.gemini-user-row .gemini-message-inner {
+  flex-direction: row-reverse;
+}
+
+.gemini-user-row .gemini-content-col {
+  align-items: flex-end;
+}
+
+.gemini-avatar-wrapper {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.gemini-user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--gemini-surface-variant);
+  border: 1px solid var(--gemini-border);
+  display: grid;
+  place-items: center;
+  color: var(--gemini-text);
+}
+
+.gemini-assistant-avatar {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.gemini-error-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(225, 160, 175, 0.15);
+  color: #ea4335;
+  display: grid;
+  place-items: center;
+}
+
+.gemini-content-col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.gemini-meta-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.gemini-sender-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gemini-text);
+}
+
+.gemini-timestamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  color: var(--gemini-subtext);
+}
+
+.gemini-model-badge {
+  font-size: 9px;
+  padding: 2px 7px;
+  border-radius: 10px;
+  background: var(--gemini-surface-variant);
+  color: #a8c7fa;
+  font-weight: 500;
+}
+
+/* Bubbles */
+.gemini-bubble.user-bubble {
+  background: var(--gemini-user-bubble);
+  border: 1px solid var(--gemini-border);
+  border-radius: 20px 20px 4px 20px;
+  padding: 12px 18px;
+  max-width: 85%;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--gemini-text);
+}
+
+.gemini-bubble.assistant-bubble {
+  width: 100%;
+  color: var(--gemini-text);
+  font-size: 14.5px;
+  line-height: 1.75;
+}
+
+/* Markdown Typography */
+.gemini-markdown-body {
+  word-break: break-word;
+}
+
+.gemini-markdown-body .gemini-h1 {
+  font-size: 22px;
+  font-weight: 600;
+  margin: 20px 0 10px;
+  color: var(--gemini-text);
+  letter-spacing: -0.3px;
+}
+
+.gemini-markdown-body .gemini-h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 18px 0 8px;
+  color: var(--gemini-text);
+  letter-spacing: -0.2px;
+}
+
+.gemini-markdown-body .gemini-h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 16px 0 6px;
+  color: var(--gemini-text);
+}
+
+.gemini-markdown-body .gemini-h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 14px 0 6px;
+  color: var(--gemini-text);
+}
+
+.gemini-markdown-body .gemini-p {
+  margin: 0 0 14px;
+}
+
+.gemini-markdown-body .gemini-p:last-child {
+  margin-bottom: 0;
+}
+
+.gemini-markdown-body .gemini-strong {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.workspace[data-theme='light'] .gemini-markdown-body .gemini-strong {
+  color: #111111;
+}
+
+.gemini-markdown-body .gemini-ul,
+.gemini-markdown-body .gemini-ol {
+  margin: 10px 0 16px;
+  padding-left: 24px;
+}
+
+.gemini-markdown-body .gemini-ul li {
+  margin-bottom: 6px;
+  list-style-type: disc;
+}
+
+.gemini-markdown-body .gemini-ol li {
+  margin-bottom: 6px;
+  list-style-type: decimal;
+}
+
+.gemini-markdown-body .gemini-divider {
+  border: 0;
+  border-top: 1px solid var(--gemini-border);
+  margin: 22px 0;
+}
+
+.gemini-markdown-body .gemini-blockquote {
+  border-left: 3px solid #7c4dff;
+  padding: 6px 16px;
+  margin: 12px 0 16px;
+  color: var(--gemini-subtext);
+  background: var(--gemini-surface);
+  border-radius: 0 8px 8px 0;
+}
+
+.gemini-markdown-body .gemini-inline-code {
+  background: var(--gemini-surface-variant);
+  border: 1px solid var(--gemini-border);
+  padding: 2px 6px;
+  border-radius: 5px;
+  font-family: 'JetBrains Mono', Consolas, Monaco, monospace;
+  font-size: 12.5px;
+  color: #ff94c2;
+}
+
+/* Code Block */
+.gemini-code-block {
+  margin: 16px 0 20px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0d0e11;
+  border: 1px solid var(--gemini-border);
+}
+
+.gemini-code-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background: #18191d;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.gemini-code-lang {
+  font-size: 11px;
+  font-weight: 600;
+  color: #9aa0a6;
+  letter-spacing: 0.5px;
+}
+
+.gemini-copy-code-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #e3e3e3;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.gemini-copy-code-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.gemini-pre {
+  margin: 0;
+  padding: 16px 18px;
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', Consolas, Monaco, monospace;
+  font-size: 13px;
+  line-height: 1.65;
+  color: #e3e3e3;
+}
+
+/* Gemini Action Bar */
+.gemini-action-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.gemini-action-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: none;
+  color: var(--gemini-subtext);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.gemini-action-btn:hover {
+  background: var(--gemini-surface-variant);
+  color: var(--gemini-text);
+}
+
+.gemini-action-btn.is-active {
+  background: var(--gemini-surface-variant);
+}
+
+.gemini-action-btn.retry-btn {
+  width: auto;
+  border-radius: 16px;
+  padding: 4px 10px;
+  gap: 5px;
+  display: inline-flex;
+  font-size: 11px;
+  color: #ea4335;
+  background: rgba(234, 67, 53, 0.1);
+}
+
+.gemini-intent-pill,
+.gemini-sentiment-pill,
+.gemini-perf-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 12px;
+  background: var(--gemini-surface);
+  border: 1px solid var(--gemini-border);
+  color: var(--gemini-subtext);
+  text-transform: capitalize;
+}
+
+.gemini-hint-error {
+  font-size: 10px;
+  color: #ea4335;
+  margin-top: 6px;
+}
+
+/* Shimmer Typing Indicator */
+.gemini-typing-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.gemini-typing-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 8px;
+}
+
+.gemini-shimmer-bar {
+  height: 12px;
+  border-radius: 6px;
+  width: 80%;
+  background: linear-gradient(90deg, var(--gemini-surface) 25%, var(--gemini-surface-variant) 50%, var(--gemini-surface) 75%);
+  background-size: 200% 100%;
+  animation: gemini-shimmer 1.5s infinite linear;
+}
+
+.gemini-shimmer-bar.short {
+  width: 50%;
+}
+
+@keyframes gemini-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Floating Input Anchor */
+.gemini-bottom-anchor {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px 24px 18px;
+  background: linear-gradient(180deg, rgba(19, 19, 20, 0) 0%, var(--gemini-bg) 40%);
+  max-width: 860px;
+  width: 100%;
+  margin: 0 auto;
+  z-index: 20;
+}
+
+.gemini-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gemini-voice-alert {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: rgba(234, 67, 53, 0.12);
+  border: 1px solid rgba(234, 67, 53, 0.3);
+  color: #f28b82;
+  font-size: 11px;
+}
+
+.gemini-capsule {
+  background: var(--gemini-capsule-bg);
+  border: 1px solid var(--gemini-capsule-border);
+  border-radius: 28px;
+  padding: 12px 16px 12px 22px;
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.18);
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.gemini-capsule:focus-within {
+  border-color: #8ab4f8;
+  box-shadow: 0 4px 24px rgba(66, 133, 244, 0.22);
+}
+
+.gemini-textarea {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--gemini-text);
+  font-size: 14.5px;
+  line-height: 1.5;
+  resize: none;
+  outline: none;
+  max-height: 160px;
+  padding: 4px 0;
+}
+
+.gemini-capsule-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.gemini-mic-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: none;
+  background: transparent;
+  color: var(--gemini-subtext);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.gemini-mic-btn:hover {
+  background: var(--gemini-surface-variant);
+  color: var(--gemini-text);
+}
+
+.gemini-mic-btn.listening {
+  color: #ea4335;
+  background: rgba(234, 67, 53, 0.15);
+  animation: pulse-ring 1.5s infinite;
+}
+
+@keyframes pulse-ring {
+  0% { box-shadow: 0 0 0 0 rgba(234, 67, 53, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(234, 67, 53, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(234, 67, 53, 0); }
+}
+
+.gemini-send-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: none;
+  background: var(--gemini-surface-variant);
+  color: var(--gemini-subtext);
+  opacity: 0.5;
+  cursor: not-allowed;
+  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+.gemini-send-btn.can-send {
+  opacity: 1;
+  cursor: pointer;
+  background: linear-gradient(135deg, #4285f4, #9b72cb);
+  color: #ffffff;
+  box-shadow: 0 2px 10px rgba(66, 133, 244, 0.4);
+}
+
+.gemini-send-btn.can-send:hover {
+  transform: scale(1.05);
+}
+
+/* Subbar */
+.gemini-input-subbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  font-size: 10.5px;
+  color: var(--gemini-subtext);
+}
+
+.gemini-subbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gemini-subbar-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: transparent;
+  border: none;
+  color: var(--gemini-subtext);
+  font-size: 10.5px;
+  cursor: pointer;
+  padding: 3px 6px;
+  border-radius: 6px;
+  transition: all 0.15s;
+}
+
+.gemini-subbar-btn:hover:not(:disabled) {
+  color: var(--gemini-text);
+  background: var(--gemini-surface);
+}
+
+.gemini-subbar-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.gemini-disclaimer {
+  font-size: 10.5px;
+  color: var(--gemini-subtext);
+  opacity: 0.8;
+}
+
+/* Inspector Drawer */
+.gemini-inspector-aside {
+  width: 300px;
+  background: var(--gemini-surface);
+  border-left: 1px solid var(--gemini-border);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow-y: auto;
+  animation: slide-in 0.25s cubic-bezier(0.2, 0, 0, 1);
+}
+
+@keyframes slide-in {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.gemini-inspector-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--gemini-border);
+}
+
+.gemini-inspector-header h3 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gemini-text);
+}
+
+.gemini-close-btn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  color: var(--gemini-subtext);
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.gemini-inspector-body {
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.gemini-inspector-card {
+  background: var(--gemini-card-bg);
+  border: 1px solid var(--gemini-border);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 8.5px;
+  letter-spacing: 0.8px;
+  font-weight: 600;
+  color: #a8c7fa;
+  margin-bottom: 10px;
+}
+
+.gemini-dl {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  font-size: 11px;
+}
+
+.gemini-dl div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.gemini-dl dt {
+  color: var(--gemini-subtext);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.gemini-dl dd {
+  font-weight: 500;
+  color: var(--gemini-text);
+}
+
+.gemini-placeholder-text {
+  font-size: 11px;
+  color: var(--gemini-subtext);
+  line-height: 1.6;
+}
+
+.gemini-pipeline-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gemini-pipeline-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10.5px;
+  color: var(--gemini-subtext);
+  padding: 6px 8px;
+  background: var(--gemini-surface-variant);
+  border-radius: 6px;
+}
+
+.step-num {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(168, 199, 250, 0.2);
+  color: #a8c7fa;
+  display: grid;
+  place-items: center;
+  font-size: 9px;
+  font-weight: 600;
+}
+
+.step-text {
+  flex: 1;
+}
+
+.gemini-security-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 10px;
+  color: var(--gemini-subtext);
+  line-height: 1.5;
+  padding: 0 4px;
+}
+
+@media (max-width: 900px) {
+  .gemini-inspector-aside {
+    position: fixed;
+    top: 60px;
+    bottom: 0;
+    right: 0;
+    z-index: 50;
+    box-shadow: -8px 0 30px rgba(0, 0, 0, 0.5);
+  }
+}
+
