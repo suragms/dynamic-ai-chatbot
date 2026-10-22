@@ -54,5 +54,5 @@ def chat():
         return jsonify({
             "success": False,
             "session_id": session_id if 'session_id' in locals() else None,
-            "error": "An internal server error occurred."
+            "error": f"Server error: {str(e)}"
         }), 500
