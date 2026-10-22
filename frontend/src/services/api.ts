@@ -1,6 +1,7 @@
 import { ChatResponse, HealthStatus, AnalyticsSummary, AnalyticsSentiment, AnalyticsIntents, AnalyticsPerformance } from '../types';
 
-const API_BASE = (import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/$/, '') : '') + '/api';
+const env = (import.meta as any).env;
+const API_BASE = (env?.VITE_API_URL ? String(env.VITE_API_URL).replace(/\/$/, '') : '') + '/api';
 
 export const api = {
   async checkHealth(): Promise<HealthStatus> {
