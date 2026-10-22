@@ -5,4 +5,5 @@ db = SQLAlchemy()
 def init_db(app):
     db.init_app(app)
     with app.app_context():
+        import backend.models  # Registers Conversation, Message, AnalyticsEvent
         db.create_all()
