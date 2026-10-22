@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { ArrowDown, ArrowRight, ArrowUpRight, Bot, Check, CheckCheck, ChevronRight, Code2, Copy, ExternalLink, Github, Linkedin, Menu, ShieldCheck, Sparkles, X } from 'lucide-react';
+import { ArrowDown, ArrowRight, ArrowUpRight, Bot, Check, CheckCheck, ChevronRight, Code2, Copy, ExternalLink, Github, Linkedin, Menu, Moon, ShieldCheck, Sparkles, Sun, X } from 'lucide-react';
 import { ChatPreview } from './ChatPreview';
 import { architecture, features, links, navigation, purposes, roadmap, steps, technologies } from './content';
 import './landing.css';
@@ -25,9 +25,23 @@ export function LandingPage() {
   const [codeTab, setCodeTab] = useState<keyof typeof codeExamples>('Python');
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState(false);
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    try {
+      const stored = localStorage.getItem('dynamic_ai_theme');
+      if (stored === 'light' || stored === 'dark') return stored;
+    } catch {}
+    return 'dark';
+  });
   const root = useRef<HTMLDivElement>(null);
   const menuButton = useRef<HTMLButtonElement>(null);
   const copyTimer = useRef<ReturnType<typeof setTimeout>>();
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('dynamic_ai_theme', theme);
+    } catch {}
+  }, [theme]);
+
   useEffect(() => {
     const visible = new Map<string, number>();
     const observer = new IntersectionObserver(entries => {
@@ -64,13 +78,34 @@ export function LandingPage() {
   };
   const selectedStep = steps[step];
   const StepIcon = selectedStep.icon;
-  return <div className="landing" ref={root}>
+  return <div className={`landing ${theme === 'light' ? 'light-theme' : 'dark-theme'}`} ref={root}>
     <a href="#main-content" className="skip-link">Skip to content</a>
     <header className="landing-header">
       <div className="nav-shell">
-        <a className="brand" href="#home" onClick={() => setMenuOpen(false)} aria-label="Dynamic AI Chatbot home"><span className="brand-logo"><Bot size={22} /></span><span>Dynamic AI<span className="brand-subtitle">CHATBOT</span></span></a>
-        <nav id="landing-navigation" aria-label="Main navigation" className={menuOpen ? 'landing-nav open' : 'landing-nav'}>{navigation.map(([id, label]) => <a href={`#${id}`} key={id} aria-current={active === id ? 'location' : undefined} className={active === id ? 'active' : ''} onClick={() => setMenuOpen(false)}>{label}</a>)}<External href={links.github} className="mobile-github"><Github size={16} /> View on GitHub</External></nav>
-        <div className="nav-actions"><External href={links.github} className="nav-github" ><Github size={16} /><span>GitHub</span></External><a href="#features" className="button primary small nav-cta">Explore Features <ArrowUpRight size={14} /></a><button ref={menuButton} type="button" className="menu-toggle" aria-label={menuOpen ? 'Close navigation' : 'Open navigation'} aria-expanded={menuOpen} aria-controls="landing-navigation" onClick={() => setMenuOpen(value => !value)}>{menuOpen ? <X size={21} /> : <Menu size={21} />}</button></div>
+        <a className="brand" href="#home" onClick={() => setMenuOpen(false)} aria-label="Dynamic AI - suragzidio">
+          <span className="brand-logo"><Bot size={20} /></span>
+          <span className="brand-text">Dynamic AI<span className="brand-subtitle">suragzidio</span></span>
+        </a>
+        <nav id="landing-navigation" aria-label="Main navigation" className={menuOpen ? 'landing-nav open' : 'landing-nav'}>
+          {navigation.map(([id, label]) => <a href={`#${id}`} key={id} aria-current={active === id ? 'location' : undefined} className={active === id ? 'active' : ''} onClick={() => setMenuOpen(false)}>{label}</a>)}
+          <External href={links.github} className="mobile-github"><Github size={16} /> View on GitHub</External>
+        </nav>
+        <div className="nav-actions">
+          <button
+            type="button"
+            className="landing-theme-toggle"
+            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
+            onClick={() => setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'))}
+          >
+            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+          </button>
+          <External href={links.github} className="nav-github"><Github size={16} /><span>GitHub</span></External>
+          <a href="#features" className="button primary small nav-cta">Explore Features <ArrowUpRight size={14} /></a>
+          <button ref={menuButton} type="button" className="menu-toggle" aria-label={menuOpen ? 'Close navigation' : 'Open navigation'} aria-expanded={menuOpen} aria-controls="landing-navigation" onClick={() => setMenuOpen(value => !value)}>
+            {menuOpen ? <X size={21} /> : <Menu size={21} />}
+          </button>
+        </div>
       </div>
     </header>
     <main id="main-content" tabIndex={-1}>
@@ -80,11 +115,20 @@ export function LandingPage() {
           <div className="project-pill"><span /> ZIDIO DEVELOPMENT · TEAM 17 <ChevronRight size={13} /></div>
           <h1>Intelligence That<br />Understands Your<br /><span>Conversation.</span></h1>
           <p className="hero-description">An intelligent conversational AI application combining Natural Language Processing, machine learning, sentiment analysis, contextual memory, and generative AI to deliver more meaningful chatbot interactions.</p>
-          <div className="hero-buttons"><a className="button primary" href="#app/chat"><Bot size={17} /> Chat Here <ArrowRight size={16} /></a><a className="button secondary" href="#features">Explore Features <ArrowRight size={16} /></a><External className="button secondary" href={links.github}><Github size={17} /> View Source Code</External></div>
-          <div className="hero-badges"><span><Sparkles size={12} /> AI-Powered</span><span><Code2 size={12} /> NLP + Machine Learning</span><span><span className="gemini-star">✧</span> Gemini API Integration</span><span className="internship-badge">Zidio Internship Project</span></div>
+          <div className="hero-buttons">
+            <a className="button primary" href="#app/chat"><Bot size={17} /> Chat Here <ArrowRight size={16} /></a>
+            <a className="button secondary" href="#features">Explore Features <ArrowRight size={16} /></a>
+            <External className="button secondary" href={links.github}><Github size={17} /> View Source Code</External>
+          </div>
+          <div className="hero-badges">
+            <span><Sparkles size={12} /> AI-Powered</span>
+            <span><Code2 size={12} /> NLP + Machine Learning</span>
+            <span><span className="gemini-star">✧</span> Gemini API Integration</span>
+            <span className="internship-badge">Zidio Internship Project</span>
+          </div>
           <div className="hero-credit"><span className="avatar-mini">SM</span><div>Individually built by <strong>Surag M S</strong><small>A practical exploration of conversational intelligence.</small></div></div>
         </div>
-        <ChatPreview />
+        <ChatPreview isDark={theme === 'dark'} />
         <a className="scroll-cue" href="#overview"><ArrowDown size={14} /> A closer look at the intelligence</a>
       </section>
       <div className="tech-ribbon"><div className="section-shell"><span className="ribbon-caption">BUILT WITH A PURPOSE.<br /><strong>POWERED BY A HYBRID STACK.</strong></span>{['Python', 'React', 'Flask', 'scikit-learn', 'spaCy', 'Gemini'].map((name, index) => <span className="ribbon-tech" key={name}><span>{['Py', '⚛', 'ƒ', 'sk', 'sp', '✧'][index]}</span>{name}</span>)}</div></div>
