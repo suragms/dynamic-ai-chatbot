@@ -1,51 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import {
-  MessageSquare,
-  Users,
-  Clock,
-  CheckCircle2,
-  AlertTriangle,
-  RefreshCw,
-  PieChart as PieIcon,
-  BarChart3,
-  TrendingUp,
-  Activity,
-  Calendar,
-  Globe2,
-  Cpu,
-  ShieldAlert,
-} from 'lucide-react';
-import {
-  PieChart,
-  Pie,
-  Cell,
-  BarChart,
-  Bar,
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
-  CartesianGrid,
-} from 'recharts';
+import { Activity, AlertTriangle, BarChart3, Calendar, CheckCircle2, Clock, Cpu, Globe2, MessageSquare, PieChart as PieIcon, RefreshCw, ShieldAlert, Users } from 'lucide-react';
+import { Bar, BarChart, CartesianGrid, Cell, Legend, Line, LineChart, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { api } from '../../services/api';
-import {
-  AnalyticsSummary,
-  AnalyticsSentiment,
-  AnalyticsIntents,
-  AnalyticsPerformance,
-} from '../../types';
+import { AnalyticsIntents, AnalyticsPerformance, AnalyticsSentiment, AnalyticsSummary } from '../../types';
 
-const SENTIMENT_COLORS = {
-  positive: '#10b981', // Emerald
-  neutral: '#64748b',  // Slate
-  negative: '#f43f5e', // Rose
-};
+const colors = ['#a08bed', '#829fe1', '#88b9a8', '#ca9bbd', '#d1b381', '#8a96b1'];
+const axis = { stroke: 'var(--ws-muted)', fontSize: 10, tickLine: false, axisLine: false };
+const tooltip = { contentStyle: { background: 'var(--ws-panel)', border: '1px solid var(--ws-line)', borderRadius: 8, color: 'var(--ws-text)', fontSize: 11 }, labelStyle: { color: 'var(--ws-text)' }, itemStyle: { color: 'var(--ws-text)' } };
+const legend = { fontSize: 10, color: 'var(--ws-muted)' };
 
-const INTENT_COLORS = ['#14b8a6', '#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#3b82f6'];
-const PROVIDER_COLORS = ['#10b981', '#6366f1', '#f59e0b', '#ec4899', '#64748b'];
+function ChartCard({ icon: Icon, title, detail, available, children, emptyText = 'No recorded data yet.', emptyDetail = 'Conversation activity will appear here.' }: { icon: typeof Activity; title: string; detail: string; available: boolean; children?: React.ReactNode; emptyText?: string; emptyDetail?: string }) {
+  return <section className="ws-panel dashboard-chart"><div className="chart-card-heading"><h2><Icon size={16} />{title}</h2><span>{detail}</span></div><div className="dashboard-chart-canvas">{available ? children : <div className="chart-empty"><BarChart3 size={25} /><p>{emptyText}</p><span>{emptyDetail}</span></div>}</div></section>;
+}
 
 export const AnalyticsDashboard: React.FC = () => {
   const [summary, setSummary] = useState<AnalyticsSummary | null>(null);
@@ -53,377 +19,48 @@ export const AnalyticsDashboard: React.FC = () => {
   const [intents, setIntents] = useState<AnalyticsIntents | null>(null);
   const [performance, setPerformance] = useState<AnalyticsPerformance | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchAnalytics = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const [sumRes, sentRes, intRes, perfRes] = await Promise.all([
-        api.getAnalyticsSummary(),
-        api.getAnalyticsSentiment(),
-        api.getAnalyticsIntents(),
-        api.getAnalyticsPerformance(),
-      ]);
-      setSummary(sumRes);
-      setSentiment(sentRes);
-      setIntents(intRes);
-      setPerformance(perfRes);
-    } catch (err: any) {
-      setError(err.message || 'Failed to load analytics data');
-    } finally {
-      setLoading(false);
-    }
-  };
-
+  const [error, setError] = useState(false);
+  const [attempt, setAttempt] = useState(0);
   useEffect(() => {
-    fetchAnalytics();
-  }, []);
-
-  const sentimentData = sentiment
-    ? [
-        { name: 'Positive', value: sentiment.distribution.positive, color: SENTIMENT_COLORS.positive },
-        { name: 'Neutral', value: sentiment.distribution.neutral, color: SENTIMENT_COLORS.neutral },
-        { name: 'Negative', value: sentiment.distribution.negative, color: SENTIMENT_COLORS.negative },
-      ].filter((d) => d.value > 0)
-    : [];
-
-  const intentData = intents
-    ? Object.entries(intents.intents)
-        .slice(0, 8)
-        .map(([name, count]) => ({ name, count }))
-    : [];
-
-  const responseTrendData = performance?.response_time_trend || [];
-  const messagesOverTimeData = performance?.messages_over_time || [];
-
-  const providerDistributionData = performance?.provider_distribution
-    ? Object.entries(performance.provider_distribution).map(([name, value]) => ({ name, value }))
-    : [];
-
-  const languageUsageData = performance?.language_usage
-    ? Object.entries(performance.language_usage).map(([name, count]) => ({ name, count }))
-    : [];
-
-  return (
-    <div className="flex-1 overflow-y-auto p-4 md:p-8 bg-slate-50 dark:bg-slate-900 space-y-6">
-      {/* Dashboard Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-            <BarChart3 className="w-6 h-6 text-teal-500" />
-            <span>Chatbot Analytics & Intelligence Dashboard</span>
-          </h2>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-            Real-time performance metrics, sentiment analysis breakdown, and ML intent statistics from database.
-          </p>
-        </div>
-        <button
-          onClick={fetchAnalytics}
-          disabled={loading}
-          className="self-start sm:self-auto flex items-center gap-2 px-3 py-2 text-xs font-semibold rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all shadow-xs"
-        >
-          <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
-          <span>Refresh Data</span>
-        </button>
+    let active = true;
+    setLoading(true); setError(false);
+    Promise.all([api.getAnalyticsSummary(), api.getAnalyticsSentiment(), api.getAnalyticsIntents(), api.getAnalyticsPerformance()])
+      .then(([sum, sent, intent, perf]) => { if (active) { setSummary(sum); setSentiment(sent); setIntents(intent); setPerformance(perf); } })
+      .catch(() => { if (active) setError(true); })
+      .finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
+  }, [attempt]);
+  const sentimentData = sentiment ? Object.entries(sentiment.distribution).map(([name, value]) => ({ name, value, color: name === 'positive' ? '#88b9a8' : name === 'negative' ? '#ce8c9f' : '#8a96b1' })).filter(item => item.value > 0) : [];
+  const intentData = intents ? Object.entries(intents.intents).sort((a, b) => b[1] - a[1]).slice(0, 8).map(([name, count]) => ({ name: name.replace(/_/g, ' '), count })) : [];
+  const trend = performance?.response_time_trend.map((point, index) => ({ ...point, response: index + 1 })) || [];
+  const daily = performance?.messages_over_time || [];
+  const providers = Object.entries(performance?.provider_distribution || {}).map(([name, value]) => ({ name, value }));
+  // The current backend synthesizes language counts instead of recording them.
+  const hasResponses = (summary?.assistant_messages || 0) > 0;
+  const metrics = summary ? [
+    { icon: Users, label: 'Conversations', value: summary.total_conversations.toLocaleString(), detail: `${summary.avg_messages_per_session} messages per session` },
+    { icon: MessageSquare, label: 'Total messages', value: summary.total_messages.toLocaleString(), detail: `${summary.user_messages} user · ${summary.assistant_messages} assistant` },
+    { icon: Clock, label: 'Average response', value: hasResponses ? `${summary.avg_response_time_ms} ms` : '—', detail: hasResponses ? `P50 ${performance?.p50_ms ?? 0} ms · P95 ${performance?.p95_ms ?? 0} ms` : 'No response times recorded' },
+    { icon: CheckCircle2, label: 'Successful routes', value: hasResponses ? `${summary.api_success_rate}%` : '—', detail: 'Includes Gemini and local handlers' },
+    { icon: ShieldAlert, label: 'Fallback usage', value: hasResponses ? `${summary.fallback_rate}%` : '—', detail: `${summary.fallback_calls} local fallback responses` },
+  ] : [];
+  return <div className="workspace-page analytics-workspace" aria-busy={loading}>
+    <div className="ws-page-heading heading-with-action"><div><span className="ws-eyebrow">CONVERSATIONAL INSIGHTS</span><h1>Every conversation<br /><span>tells a story.</span></h1><p>Explore intent, sentiment, and response performance from your conversation database.</p></div><div className="analytics-heading-actions"><span className="ws-data-label"><i />Backend data</span><button type="button" className="ws-button" disabled={loading} onClick={() => setAttempt(previous => previous + 1)}><RefreshCw size={14} className={loading ? 'ws-spin' : ''} />Refresh data</button></div></div>
+    {loading ? <div className="dashboard-loading" role="status"><RefreshCw size={24} className="ws-spin" /><h2>Reading your conversation insights…</h2><p>Fetching metrics from the project backend.</p></div> : error ? <div className="ws-panel dashboard-error" role="status"><AlertTriangle size={28} /><h2>Let’s reconnect the insights.</h2><p>The analytics backend is unavailable. Start the Flask server and try again.</p><button type="button" className="ws-button primary" onClick={() => setAttempt(previous => previous + 1)}><RefreshCw size={14} />Retry connection</button></div> : <>
+      <div className="dashboard-metrics">{metrics.map(({ icon: Icon, label, value, detail }) => <article className="ws-panel dashboard-metric" key={label}><div><span>{label}</span><Icon size={17} /></div><strong>{value}</strong><p>{detail}</p></article>)}</div>
+      {summary?.total_messages === 0 && <div className="dashboard-empty-banner"><SparkleMessage /><div><strong>A fresh start for your insights.</strong><p>Send a message in Chat to begin recording conversations and analysis.</p></div></div>}
+      <div className="dashboard-charts">
+        <ChartCard icon={Calendar} title="Messages over time" detail="Daily message volume" available={daily.length > 0}><ResponsiveContainer width="100%" height="100%"><BarChart data={daily} margin={{ left: -15, top: 15, right: 5 }}><CartesianGrid vertical={false} stroke="var(--ws-line)" strokeDasharray="3 5" /><XAxis dataKey="date" {...axis} /><YAxis {...axis} allowDecimals={false} /><Tooltip {...tooltip} cursor={{ fill: 'var(--ws-hover)' }} /><Legend wrapperStyle={legend} verticalAlign="top" height={32} /><Bar dataKey="user" name="User" fill={colors[0]} radius={[4, 4, 0, 0]} isAnimationActive={false} /><Bar dataKey="assistant" name="Assistant" fill={colors[1]} radius={[4, 4, 0, 0]} isAnimationActive={false} /></BarChart></ResponsiveContainer></ChartCard>
+        <ChartCard icon={PieIcon} title="Sentiment distribution" detail={`${sentiment?.total_analyzed ?? 0} messages analyzed`} available={sentimentData.length > 0}><ResponsiveContainer width="100%" height="100%"><PieChart><Pie data={sentimentData} innerRadius={62} outerRadius={88} paddingAngle={4} dataKey="value" stroke="none" isAnimationActive={false}>{sentimentData.map(item => <Cell key={item.name} fill={item.color} />)}</Pie><Tooltip {...tooltip} /><Legend wrapperStyle={{ ...legend, textTransform: 'capitalize' }} /></PieChart></ResponsiveContainer></ChartCard>
+        <ChartCard icon={BarChart3} title="Intent distribution" detail="Most frequent intents" available={intentData.length > 0}><ResponsiveContainer width="100%" height="100%"><BarChart data={intentData} layout="vertical" margin={{ left: 5, top: 5, right: 15 }}><CartesianGrid horizontal={false} stroke="var(--ws-line)" strokeDasharray="3 5" /><XAxis type="number" {...axis} allowDecimals={false} /><YAxis dataKey="name" type="category" {...axis} width={110} /><Tooltip {...tooltip} cursor={{ fill: 'var(--ws-hover)' }} /><Bar dataKey="count" name="Messages" radius={[0, 4, 4, 0]} isAnimationActive={false}>{intentData.map((item, index) => <Cell key={item.name} fill={colors[index % colors.length]} />)}</Bar></BarChart></ResponsiveContainer></ChartCard>
+        <ChartCard icon={Activity} title="Response-time trend" detail="Recent responses · milliseconds" available={trend.length > 0}><ResponsiveContainer width="100%" height="100%"><LineChart data={trend} margin={{ left: -15, top: 15, right: 15 }}><CartesianGrid vertical={false} stroke="var(--ws-line)" strokeDasharray="3 5" /><XAxis dataKey="response" {...axis} /><YAxis {...axis} /><Tooltip {...tooltip} /><Line type="monotone" dataKey="response_time_ms" name="Response time (ms)" stroke={colors[0]} strokeWidth={2} dot={{ r: 3, fill: colors[0] }} isAnimationActive={false} /></LineChart></ResponsiveContainer></ChartCard>
+        <ChartCard icon={Cpu} title="Response providers" detail="How replies were generated" available={providers.length > 0}><ResponsiveContainer width="100%" height="100%"><PieChart><Pie data={providers} innerRadius={62} outerRadius={88} paddingAngle={4} dataKey="value" stroke="none" isAnimationActive={false}>{providers.map((item, index) => <Cell key={item.name} fill={colors[index % colors.length]} />)}</Pie><Tooltip {...tooltip} /><Legend wrapperStyle={legend} /></PieChart></ResponsiveContainer></ChartCard>
+        <ChartCard icon={Globe2} title="Language usage" detail="English · Hindi · Hinglish" available={false} emptyText="Language usage is not recorded yet." emptyDetail="All three response languages are available in settings." />
       </div>
-
-      {error && (
-        <div className="p-4 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 rounded-2xl text-rose-700 dark:text-rose-300 text-sm flex items-center gap-2">
-          <AlertTriangle className="w-5 h-5 shrink-0" />
-          <span>{error}</span>
-        </div>
-      )}
-
-      {/* Primary KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        {/* Total Conversations */}
-        <div className="p-5 bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl shadow-xs space-y-2">
-          <div className="flex items-center justify-between text-slate-400">
-            <span className="text-xs font-semibold uppercase tracking-wider">Conversations</span>
-            <div className="p-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400">
-              <Users className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="text-3xl font-extrabold text-slate-900 dark:text-white">
-            {summary?.total_conversations ?? 0}
-          </div>
-          <p className="text-[11px] text-slate-400">Avg {summary?.avg_messages_per_session ?? 0} msgs/session</p>
-        </div>
-
-        {/* Total Messages */}
-        <div className="p-5 bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl shadow-xs space-y-2">
-          <div className="flex items-center justify-between text-slate-400">
-            <span className="text-xs font-semibold uppercase tracking-wider">Total Messages</span>
-            <div className="p-2 rounded-xl bg-teal-50 dark:bg-teal-950/50 text-teal-600 dark:text-teal-400">
-              <MessageSquare className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="text-3xl font-extrabold text-slate-900 dark:text-white">
-            {summary?.total_messages ?? 0}
-          </div>
-          <p className="text-[11px] text-slate-400">
-            {summary?.user_messages ?? 0} User / {summary?.assistant_messages ?? 0} AI
-          </p>
-        </div>
-
-        {/* Avg Response Time */}
-        <div className="p-5 bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl shadow-xs space-y-2">
-          <div className="flex items-center justify-between text-slate-400">
-            <span className="text-xs font-semibold uppercase tracking-wider">Avg Latency</span>
-            <div className="p-2 rounded-xl bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400">
-              <Clock className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="text-3xl font-extrabold text-slate-900 dark:text-white">
-            {summary?.avg_response_time_ms ? `${summary.avg_response_time_ms} ms` : '0 ms'}
-          </div>
-          <p className="text-[11px] text-slate-400">P50: {performance?.p50_ms ?? 0}ms | P95: {performance?.p95_ms ?? 0}ms</p>
-        </div>
-
-        {/* API Success Rate */}
-        <div className="p-5 bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl shadow-xs space-y-2">
-          <div className="flex items-center justify-between text-slate-400">
-            <span className="text-xs font-semibold uppercase tracking-wider">API Success Rate</span>
-            <div className="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400">
-              <CheckCircle2 className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="text-3xl font-extrabold text-slate-900 dark:text-white">
-            {summary?.api_success_rate ?? 100}%
-          </div>
-          <p className="text-[11px] text-slate-400">
-            Gemini ({summary?.gemini_percentage ?? 0}%) + Intent ({summary?.intent_engine_calls ?? 0})
-          </p>
-        </div>
-
-        {/* Fallback Rate */}
-        <div className="p-5 bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl shadow-xs space-y-2">
-          <div className="flex items-center justify-between text-slate-400">
-            <span className="text-xs font-semibold uppercase tracking-wider">Fallback Rate</span>
-            <div className="p-2 rounded-xl bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400">
-              <ShieldAlert className="w-4 h-4" />
-            </div>
-          </div>
-          <div className="text-3xl font-extrabold text-slate-900 dark:text-white">
-            {summary?.fallback_rate ?? 0}%
-          </div>
-          <p className="text-[11px] text-slate-400">
-            {summary?.fallback_calls ?? 0} Local fallback instances
-          </p>
-        </div>
-      </div>
-
-      {/* 6 Visual Charts Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Chart 1: Messages Over Time */}
-        <div className="p-6 bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl shadow-xs space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
-            <h3 className="text-sm font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-teal-500" />
-              <span>1. Messages Over Time</span>
-            </h3>
-            <span className="text-xs text-slate-400">Daily Message Volume</span>
-          </div>
-          <div className="h-64 flex items-center justify-center">
-            {messagesOverTimeData.length > 0 ? (
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={messagesOverTimeData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
-                  <XAxis dataKey="date" stroke="#94a3b8" fontSize={11} />
-                  <YAxis stroke="#94a3b8" fontSize={11} />
-                  <Tooltip />
-                  <Legend verticalAlign="top" height={36} />
-                  <Bar dataKey="user" fill="#14b8a6" name="User Messages" radius={[4, 4, 0, 0]} />
-                  <Bar dataKey="assistant" fill="#6366f1" name="Assistant Messages" radius={[4, 4, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            ) : (
-              <p className="text-xs text-slate-400 italic">No daily message data available.</p>
-            )}
-          </div>
-        </div>
-
-        {/* Chart 2: Sentiment Distribution */}
-        <div className="p-6 bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl shadow-xs space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
-            <h3 className="text-sm font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
-              <PieIcon className="w-4 h-4 text-emerald-500" />
-              <span>2. Sentiment Distribution</span>
-            </h3>
-            <span className="text-xs text-slate-400">
-              {sentiment?.total_analyzed ?? 0} Analyzed
-            </span>
-          </div>
-          <div className="h-64 flex items-center justify-center">
-            {sentimentData.length > 0 ? (
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={sentimentData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={90}
-                    paddingAngle={4}
-                    dataKey="value"
-                  >
-                    {sentimentData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                  <Legend verticalAlign="bottom" height={36} />
-                </PieChart>
-              </ResponsiveContainer>
-            ) : (
-              <p className="text-xs text-slate-400 italic">No sentiment analysis data recorded yet.</p>
-            )}
-          </div>
-        </div>
-
-        {/* Chart 3: Intent Distribution */}
-        <div className="p-6 bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl shadow-xs space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
-            <h3 className="text-sm font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-indigo-500" />
-              <span>3. Intent Distribution (Top ML Intents)</span>
-            </h3>
-            <span className="text-xs text-slate-400">
-              {intents?.total_detected ?? 0} Classified
-            </span>
-          </div>
-          <div className="h-64 flex items-center justify-center">
-            {intentData.length > 0 ? (
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={intentData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
-                  <XAxis dataKey="name" stroke="#94a3b8" fontSize={11} />
-                  <YAxis stroke="#94a3b8" fontSize={11} />
-                  <Tooltip />
-                  <Bar dataKey="count" fill="#14b8a6" radius={[6, 6, 0, 0]}>
-                    {intentData.map((_, index) => (
-                      <Cell key={`bar-${index}`} fill={INTENT_COLORS[index % INTENT_COLORS.length]} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            ) : (
-              <p className="text-xs text-slate-400 italic">No intent predictions recorded yet.</p>
-            )}
-          </div>
-        </div>
-
-        {/* Chart 4: Response Time Trend */}
-        <div className="p-6 bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl shadow-xs space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
-            <h3 className="text-sm font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
-              <Activity className="w-4 h-4 text-amber-500" />
-              <span>4. Response-Time Trend (Recent Latencies)</span>
-            </h3>
-            <span className="text-xs text-slate-400">Latency in ms</span>
-          </div>
-          <div className="h-64 flex items-center justify-center">
-            {responseTrendData.length > 0 ? (
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={responseTrendData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
-                  <XAxis dataKey="timestamp" stroke="#94a3b8" fontSize={10} />
-                  <YAxis stroke="#94a3b8" fontSize={11} />
-                  <Tooltip />
-                  <Line type="monotone" dataKey="response_time_ms" stroke="#f59e0b" strokeWidth={2} dot={{ r: 4 }} name="Latency (ms)" />
-                </LineChart>
-              </ResponsiveContainer>
-            ) : (
-              <p className="text-xs text-slate-400 italic">No latency trend data recorded yet.</p>
-            )}
-          </div>
-        </div>
-
-        {/* Chart 5: Provider Success/Distribution */}
-        <div className="p-6 bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl shadow-xs space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
-            <h3 className="text-sm font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
-              <Cpu className="w-4 h-4 text-sky-500" />
-              <span>5. Provider Call Distribution</span>
-            </h3>
-            <span className="text-xs text-slate-400">Gemini vs Intent vs Fallback</span>
-          </div>
-          <div className="h-64 flex items-center justify-center">
-            {providerDistributionData.length > 0 ? (
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={providerDistributionData}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={50}
-                    outerRadius={80}
-                    paddingAngle={4}
-                    dataKey="value"
-                  >
-                    {providerDistributionData.map((_, index) => (
-                      <Cell key={`prov-${index}`} fill={PROVIDER_COLORS[index % PROVIDER_COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                  <Legend verticalAlign="bottom" height={36} />
-                </PieChart>
-              </ResponsiveContainer>
-            ) : (
-              <p className="text-xs text-slate-400 italic">No provider distribution data available.</p>
-            )}
-          </div>
-        </div>
-
-        {/* Chart 6: Language Usage */}
-        <div className="p-6 bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl shadow-xs space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
-            <h3 className="text-sm font-bold text-slate-800 dark:text-slate-100 flex items-center gap-2">
-              <Globe2 className="w-4 h-4 text-purple-500" />
-              <span>6. Multilingual Usage Stats</span>
-            </h3>
-            <span className="text-xs text-slate-400">English, Hindi, Hinglish</span>
-          </div>
-          <div className="h-64 flex items-center justify-center">
-            {languageUsageData.length > 0 ? (
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={languageUsageData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
-                  <XAxis dataKey="name" stroke="#94a3b8" fontSize={11} />
-                  <YAxis stroke="#94a3b8" fontSize={11} />
-                  <Tooltip />
-                  <Bar dataKey="count" fill="#8b5cf6" radius={[6, 6, 0, 0]} name="Sessions/Messages" />
-                </BarChart>
-              </ResponsiveContainer>
-            ) : (
-              <p className="text-xs text-slate-400 italic">No language usage statistics recorded.</p>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Additional Information: Top Intent Breakdown & Percentages */}
-      {intents?.most_common_intents && intents.most_common_intents.length > 0 && (
-        <div className="p-6 bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl shadow-xs space-y-4">
-          <h3 className="text-sm font-bold text-slate-800 dark:text-slate-100">
-            Most Common Intent Categories Breakdown
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3">
-            {intents.most_common_intents.map((item) => (
-              <div key={item.intent} className="p-3 bg-slate-50 dark:bg-slate-900 rounded-xl border border-slate-200/60 dark:border-slate-700/60 text-center">
-                <div className="text-xs font-semibold text-teal-600 dark:text-teal-400 uppercase tracking-wider truncate">
-                  {item.intent}
-                </div>
-                <div className="text-lg font-bold text-slate-900 dark:text-white mt-1">
-                  {item.count} <span className="text-xs font-normal text-slate-400">({item.percentage}%)</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-  );
+      {!!intents?.most_common_intents?.length && <section className="ws-panel common-intents"><h2>Most common intents</h2><div>{intents.most_common_intents.map(item => <article key={item.intent}><span>{item.intent.replace(/_/g, ' ')}</span><strong>{item.count}<small>{item.percentage}%</small></strong></article>)}</div></section>}
+      <p className="dashboard-note">Metrics reflect recorded backend data. Successful routing includes local handlers and is not a Gemini uptime or model accuracy measure.</p>
+    </>}
+  </div>;
 };
 
+function SparkleMessage() { return <MessageSquare size={23} />; }

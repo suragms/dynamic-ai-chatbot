@@ -26,7 +26,8 @@ class Config:
     FLASK_ENV = os.getenv("FLASK_ENV", "development")
 
     # Database Settings
-    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR / 'chatbot.db'}")
+    _default_db = "sqlite:////tmp/chatbot.db" if os.getenv("VERCEL") else f"sqlite:///{BASE_DIR / 'chatbot.db'}"
+    SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", _default_db)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # NLP & ML Thresholds

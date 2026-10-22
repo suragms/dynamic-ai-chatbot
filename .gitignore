@@ -38,6 +38,7 @@ wheels/
 instance/
 logs/
 models/*.pkl
+!models/intent_model.pkl
 models/*.joblib
 
 # Node & Frontend

@@ -1,161 +1,24 @@
 import React from 'react';
-import { Bot, Cpu, ShieldCheck, Layers, Sparkles, Code2, Database, Brain } from 'lucide-react';
+import { ArrowUpRight, Bot, BrainCircuit, Code2, Database, Github, History, Layers, Linkedin, ShieldCheck, Sparkles } from 'lucide-react';
 import { HealthStatus } from '../../types';
+import { links } from '../Landing/content';
 
-interface AboutViewProps {
-  health: HealthStatus | null;
-}
+interface AboutViewProps { health: HealthStatus | null; }
+const tiers = [
+  ['01', 'Intent handler', 'Deterministic replies for high-confidence greetings, date, time, capabilities, and account assistance.'],
+  ['02', 'Technical FAQ', 'Curated answers for Python, machine learning, and data science questions.'],
+  ['03', 'Generative intelligence', 'Backend Gemini integration for suitable open-ended requests, enriched with recent context.'],
+  ['04', 'Local NLP engine', 'A local intent response when generative services are unavailable and confidence is sufficient.'],
+  ['05', 'Friendly fallback', 'Localized guidance when no suitable handler or provider response is available.'],
+];
 
-export const AboutView: React.FC<AboutViewProps> = ({ health }) => {
-  return (
-    <div className="flex-1 overflow-y-auto p-4 md:p-8 bg-slate-50 dark:bg-slate-900 space-y-8">
-      {/* Hero Header */}
-      <div className="bg-gradient-to-r from-slate-900 via-teal-900 to-slate-900 text-white rounded-3xl p-6 md:p-10 shadow-xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 -mt-10 -mr-10 w-64 h-64 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
-          <div className="space-y-3 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 border border-teal-500/30 text-xs font-medium">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Version 1.0.0 • Production Ready</span>
-            </div>
-            <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight">
-              Dynamic AI Chatbot Platform
-            </h1>
-            <p className="text-slate-300 text-sm md:text-base leading-relaxed">
-              An intelligent, context-aware conversational AI platform combining classical Natural Language Processing (NLP), Scikit-Learn Intent Classification, spaCy Named Entity Recognition, NLTK Sentiment Analysis, and Google Gemini Generative AI.
-            </p>
-          </div>
-
-          <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-tr from-teal-400 to-emerald-300 flex items-center justify-center text-slate-900 shadow-lg shrink-0">
-            <Bot className="w-10 h-10" />
-          </div>
-        </div>
-      </div>
-
-      {/* System Status Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div className="p-5 bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl shadow-xs flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-teal-50 dark:bg-teal-950/50 text-teal-600 dark:text-teal-400">
-            <Cpu className="w-6 h-6" />
-          </div>
-          <div>
-            <div className="text-xs text-slate-400 font-semibold uppercase">Generative Engine</div>
-            <div className="text-sm font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1.5 mt-0.5">
-              <span className={`w-2 h-2 rounded-full ${health?.gemini_api_configured ? 'bg-emerald-500' : 'bg-amber-500'}`} />
-              <span>{health?.gemini_model || 'gemini-1.5-flash'}</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="p-5 bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl shadow-xs flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400">
-            <Brain className="w-6 h-6" />
-          </div>
-          <div>
-            <div className="text-xs text-slate-400 font-semibold uppercase">ML Intent Classifier</div>
-            <div className="text-sm font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1.5 mt-0.5">
-              <span className={`w-2 h-2 rounded-full ${health?.intent_model_loaded ? 'bg-emerald-500' : 'bg-rose-500'}`} />
-              <span>Linear SVM (100% Acc)</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="p-5 bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-2xl shadow-xs flex items-center gap-4">
-          <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400">
-            <ShieldCheck className="w-6 h-6" />
-          </div>
-          <div>
-            <div className="text-xs text-slate-400 font-semibold uppercase">Security Compliance</div>
-            <div className="text-sm font-bold text-slate-800 dark:text-slate-100 mt-0.5">
-              Zero Secrets Policy (.env)
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Multi-Tier Architecture Explanation */}
-      <div className="bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-3xl p-6 md:p-8 shadow-xs space-y-6">
-        <h2 className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
-          <Layers className="w-5 h-5 text-teal-500" />
-          <span>Multi-Tier Response Routing Architecture</span>
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 space-y-2">
-            <div className="text-xs font-bold text-teal-600 dark:text-teal-400 uppercase tracking-wider">Tier 1: Intent Handler</div>
-            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-              Deterministic responses for high-confidence intents (greetings, time, date, capabilities, account help).
-            </p>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 space-y-2">
-            <div className="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">Tier 2: FAQ Engine</div>
-            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-              Domain-specific curated responses for technical subjects (Python, Machine Learning, Data Science).
-            </p>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 space-y-2">
-            <div className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">Tier 3: Generative Gemini</div>
-            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-              Google Gemini REST API integration for complex open-ended conversation synthesis with context history.
-            </p>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 space-y-2">
-            <div className="text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider">Tier 4: Local NLP Engine</div>
-            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-              Fallback classification via local Linear SVM model when generative services are unreachable.
-            </p>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 space-y-2">
-            <div className="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-wider">Tier 5: Friendly Fallback</div>
-            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-              Safe, user-friendly fallback guidance ensuring zero raw exception exposure to end users.
-            </p>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 space-y-2">
-            <div className="text-xs font-bold text-sky-600 dark:text-sky-400 uppercase tracking-wider">Multilingual Support</div>
-            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-              Dynamic response translation and prompt conditioning for English, Hindi (Devanagari), and Hinglish.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Technology Stack Details */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-3xl p-6 shadow-xs space-y-4">
-          <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-            <Code2 className="w-5 h-5 text-teal-500" />
-            <span>Frontend Stack</span>
-          </h3>
-          <ul className="text-xs text-slate-600 dark:text-slate-300 space-y-2">
-            <li className="flex items-center gap-2">• <strong>Framework:</strong> React 18 + TypeScript</li>
-            <li className="flex items-center gap-2">• <strong>Build Tool:</strong> Vite</li>
-            <li className="flex items-center gap-2">• <strong>Styling:</strong> Tailwind CSS</li>
-            <li className="flex items-center gap-2">• <strong>Icons:</strong> Lucide React</li>
-            <li className="flex items-center gap-2">• <strong>Analytics Charts:</strong> Recharts</li>
-          </ul>
-        </div>
-
-        <div className="bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 rounded-3xl p-6 shadow-xs space-y-4">
-          <h3 className="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
-            <Database className="w-5 h-5 text-indigo-500" />
-            <span>Backend Stack</span>
-          </h3>
-          <ul className="text-xs text-slate-600 dark:text-slate-300 space-y-2">
-            <li className="flex items-center gap-2">• <strong>API Server:</strong> Python Flask REST API</li>
-            <li className="flex items-center gap-2">• <strong>Database:</strong> SQLite with SQLAlchemy ORM</li>
-            <li className="flex items-center gap-2">• <strong>NLP & ML:</strong> NLTK, spaCy (en_core_web_sm), Scikit-Learn</li>
-            <li className="flex items-center gap-2">• <strong>Generative Provider:</strong> Google Gemini API</li>
-            <li className="flex items-center gap-2">• <strong>Testing:</strong> Pytest automated test suite</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
-};
+export const AboutView: React.FC<AboutViewProps> = ({ health }) => <div className="workspace-page about-page">
+  <div className="ws-page-heading"><span className="ws-eyebrow">THE INTELLIGENCE BEHIND THE INTERFACE</span><h1>Thoughtfully connected.<br /><span>Independently built.</span></h1><p>A practical exploration of NLP, machine learning, and generative AI — developed by Surag M S for Zidio Development, Team 17.</p></div>
+  <section className="about-introduction ws-panel"><span className="workspace-logo"><Bot size={28} /></span><div><span className="ws-eyebrow">DYNAMIC AI CHATBOT</span><h2>Understand first. Respond meaningfully.</h2><p>Traditional language-processing techniques and modern generative AI work together to recognize intent, estimate sentiment, extract supported entities, and maintain recent conversation context.</p></div></section>
+  <section className="system-status-grid" aria-label="System configuration">
+    {[{ icon: Sparkles, label: 'Generative provider', value: health ? (health.gemini_api_configured ? 'Gemini configured' : 'Local response mode') : 'Backend unavailable', detail: health?.gemini_api_configured ? `${health.gemini_model} · connectivity unverified` : 'Gemini requires backend credentials.' }, { icon: BrainCircuit, label: 'Intent classification', value: health ? (health.intent_model_loaded ? 'Model loaded' : 'Model unavailable') : 'Status unavailable', detail: 'scikit-learn · confidence-based routing' }, { icon: ShieldCheck, label: 'Credential handling', value: 'Backend environment only', detail: 'No provider keys collected by this interface.' }, { icon: History, label: 'Conversation context', value: health ? `${health.max_context_messages} recent messages` : 'Backend configured window', detail: 'Session history persisted with SQLAlchemy.' }].map(({ icon: Icon, label, value, detail }) => <article className="ws-panel status-card" key={label}><span className="ws-feature-icon"><Icon size={19} /></span><span className="ws-eyebrow">{label}</span><h3>{value}</h3><p>{detail}</p></article>)}
+  </section>
+  <section className="routing-section"><div className="ws-section-heading"><Layers size={18} /><div><h2>One conversation. Five response routes.</h2><p>Each request follows the most suitable implemented route.</p></div></div><div className="routing-cards">{tiers.map(([number, title, description]) => <article className="ws-panel routing-card" key={number}><span className="route-number">{number}</span><h3>{title}</h3><p>{description}</p></article>)}</div></section>
+  <div className="about-stack-grid">{[{ icon: Code2, title: 'The interface', tools: ['React 18 + TypeScript', 'Vite development and production builds', 'Tailwind CSS + scoped design styles', 'Lucide icons + Recharts visualizations'] }, { icon: Database, title: 'The intelligence', tools: ['Python + Flask REST API', 'NLTK + spaCy language processing', 'scikit-learn intent classification', 'SQLite + SQLAlchemy persistence', 'Google Gemini REST integration'] }].map(({ icon: Icon, title, tools }) => <section className="ws-panel about-stack" key={title}><h2><Icon size={19} />{title}</h2><ul>{tools.map(tool => <li key={tool}><span />{tool}</li>)}</ul></section>)}</div>
+  <section className="ws-panel workspace-developer"><div className="workspace-developer-avatar">SM</div><div><span className="ws-eyebrow">ZIDIO DEVELOPMENT · TEAM 17</span><h2>Built independently by Surag M S.</h2><p>The implementation, integration, and project development were completed individually, without team development support.</p></div><div className="workspace-developer-links"><a href={links.github} target="_blank" rel="noopener noreferrer" className="ws-button"><Github size={14} />Source code<ArrowUpRight size={13} /></a><a href={links.linkedin} target="_blank" rel="noopener noreferrer" className="ws-icon-button" aria-label="Connect with Surag on LinkedIn"><Linkedin size={17} /></a><a href={links.portfolio} target="_blank" rel="noopener noreferrer" className="ws-icon-button" aria-label="Visit Surag’s portfolio"><ArrowUpRight size={18} /></a></div></section>
+</div>;

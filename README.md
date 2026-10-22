@@ -1,5 +1,54 @@
 # Dynamic AI Chatbot with NLP & Generative AI
 
+## Landing page
+
+The root URL now opens a responsive landing page for **Dynamic AI Chatbot**, individually built by **Surag M S** for the **Zidio Development Internship, Team 17**. The original chatbot, dashboard, settings, voice controls, and exports remain available at `/#app/chat` and `/#app/analytics`.
+
+The page includes a clearly labeled scripted conversation preview, purpose cards, twelve feature cards, an interactive eight-stage processing pipeline, the actual technology stack, Gemini configuration examples, system architecture, real backend analytics, nine planned enhancements, developer attribution, project links, and the mandatory footer. Feature filters, active navigation, the mobile menu, code copying, and reduced-motion support are included.
+
+The landing page uses the existing **React 18, TypeScript, Vite, Tailwind CSS, Lucide, and Recharts** dependencies plus scoped CSS. No new package is required. The backend remains **Python / Flask, NLTK, spaCy, scikit-learn, NumPy, SQLite / SQLAlchemy**, and the Gemini REST integration. Analytics are fetched from the existing four analytics endpoints when their section enters view. No mock performance metrics or direct browser-to-Gemini requests are used.
+
+### Matching chatbot workspace
+
+Chat, analytics, settings, and About share the landing page's navy and violet palette, typography, rounded panels, and focus styling. The chat includes a live session/context panel, readable response metadata, voice controls, copy/regenerate actions, and exports. Dark is the default for new settings; existing preferences and light/system modes are retained. Settings supports Escape dismissal, keyboard focus containment, and focus restoration.
+
+The dashboard shows recorded metrics and five data visualizations. Its language-usage panel is labeled unavailable because the current backend estimates language counts instead of recording per-message language. Empty datasets do not claim measured success rates. See [Workspace QA](docs/WORKSPACE_QA.md) for the redesign checks and limitations.
+
+### Run locally
+
+Install the backend dependencies and spaCy resources as described below. From the project root, copy `.env.example` to `.env` if a local configuration does not already exist; never overwrite existing credentials. Use a supported Gemini model from [Google's documentation](https://ai.google.dev/gemini-api/docs). A key is optional for local response handlers and fallbacks.
+
+In one terminal, start the backend:
+
+```powershell
+python backend/app.py
+```
+
+In another terminal:
+
+```powershell
+cd frontend
+npm ci
+npm run dev
+```
+
+Open **http://localhost:3000/**. Vite forwards `/api` to `http://127.0.0.1:5000`. The landing page renders without the backend; analytics show a connection message with a retry button. The chatbot requires the backend. A configured API key does not establish that Gemini is reachable.
+
+For an alternative local backend, set `BACKEND_PROXY_TARGET` in the frontend development process before starting Vite. This changes only the development proxy target; the default remains `http://127.0.0.1:5000`. Provider credentials stay exclusively on the backend.
+
+### Build and deploy
+
+```powershell
+cd frontend
+npm run build
+```
+
+The output is `frontend/dist`. Start Flask from the project root to serve the built frontend and `/api` on the same origin. For production, use a production WSGI server behind HTTPS rather than Flask's development server (see the deployment section below). Configure `SECRET_KEY`, `CORS_ORIGINS`, `DATABASE_URL`, `GOOGLE_API_KEY`, and `GEMINI_MODEL` only on the backend. Ensure the intent model and language resources are installed.
+
+A static host can serve `frontend/dist`, but it must reverse-proxy `/api` to your backend for chat and analytics to work. Do not add credentials to `VITE_*` variables or browser code. Before public deployment, update Open Graph and Twitter image metadata in `frontend/index.html` to the absolute deployed URL of `/social-preview.png`, and add your final canonical URL. Hash navigation requires no extra routing package.
+
+Validation and the file inventory are recorded in [Landing page QA](docs/LANDING_PAGE_QA.md). Live Gemini connectivity is not claimed: provider tests use mocks, and browser QA uses local handlers with the API key disabled.
+
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![React 18](https://img.shields.io/badge/react-18.3.1-blue.svg)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/typescript-5.5.3-blue.svg)](https://www.typescriptlang.org/)
@@ -444,7 +493,7 @@ curl http://localhost:5000/api/health
 cd frontend
 npm run dev
 ```
-The React development server runs at `http://localhost:5173`. API requests are proxied directly to `http://localhost:5000`.
+The React development server runs at `http://localhost:3000`. API requests are proxied to `http://127.0.0.1:5000`.
 
 ### Production Mode (Built SPA)
 ```bash

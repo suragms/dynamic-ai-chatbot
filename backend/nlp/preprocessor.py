@@ -7,6 +7,12 @@ from nltk.corpus import stopwords
 
 # Ensure necessary NLTK data packages are available
 def _ensure_nltk_resources():
+    nltk_data_dir = os.environ.get("NLTK_DATA", "/tmp/nltk_data" if os.environ.get("VERCEL") else None)
+    if nltk_data_dir:
+        os.makedirs(nltk_data_dir, exist_ok=True)
+        if nltk_data_dir not in nltk.data.path:
+            nltk.data.path.append(nltk_data_dir)
+
     resources = [
         ("tokenizers/punkt", "punkt"),
         ("tokenizers/punkt_tab", "punkt_tab"),
@@ -18,7 +24,10 @@ def _ensure_nltk_resources():
             nltk.data.find(res_path)
         except LookupError:
             try:
-                nltk.download(res_name, quiet=True)
+                if nltk_data_dir:
+                    nltk.download(res_name, download_dir=nltk_data_dir, quiet=True)
+                else:
+                    nltk.download(res_name, quiet=True)
             except Exception:
                 pass
 
