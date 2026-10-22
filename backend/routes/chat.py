@@ -20,7 +20,7 @@ def chat():
     }
     """
     try:
-        data = request.get_json() or {}
+        data = request.get_json(silent=True) or {}
         message_text = str(data.get("message", "")).strip()
         session_id = data.get("session_id") or str(uuid.uuid4())
         language = data.get("language", "en")
