@@ -53,7 +53,7 @@ def get_analytics_summary():
         prov = (m.provider or "").lower()
         if "gemini" in prov:
             gemini_count += 1
-        elif "intent" in prov or "faq" in prov:
+        elif "intent" in prov or "faq" in prov or "local nlp" in prov or "model" in prov:
             intent_count += 1
         else:
             fallback_count += 1

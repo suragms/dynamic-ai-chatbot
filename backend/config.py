@@ -15,7 +15,7 @@ class Config:
     BASE_DIR = BASE_DIR
     # Security & Key management
     GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
-    GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
+    GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.5-flash")
     SECRET_KEY = os.getenv("SECRET_KEY", "dev_secret_key_change_in_production")
     CORS_ORIGINS = os.getenv("CORS_ORIGINS", "*")
     MAX_MESSAGE_LENGTH = int(os.getenv("MAX_MESSAGE_LENGTH", 4000))

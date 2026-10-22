@@ -56,38 +56,38 @@ class GeminiProvider:
                 "parts": [{"text": system_instruction}]
             }
 
+        models_to_try = [config.GEMINI_MODEL]
+        for fallback in ["gemini-3.5-flash", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite"]:
+            if fallback not in models_to_try:
+                models_to_try.append(fallback)
+
         headers = {"Content-Type": "application/json"}
-        request_url = f"{self.api_url}?key={api_key}"
-
         last_exception = None
-        for attempt in range(max_retries):
-            try:
-                response = requests.post(request_url, json=payload, headers=headers, timeout=self.timeout)
-                if response.status_code == 200:
-                    data = response.json()
-                    candidates = data.get("candidates", [])
-                    if candidates and candidates[0].get("content", {}).get("parts"):
-                        reply = candidates[0]["content"]["parts"][0].get("text", "").strip()
-                        if reply:
-                            return reply
-                    raise ValueError("Received empty response from Gemini API.")
-                elif response.status_code == 429:  # Rate limited
-                    time.sleep(1.0 * (2 ** attempt))
-                    continue
-                elif response.status_code in (400, 401, 403):
-                    raise ValueError(f"Gemini API Authentication or Client Error ({response.status_code}).")
-                else:
-                    response.raise_for_status()
-            except requests.exceptions.Timeout as te:
-                last_exception = te
-                time.sleep(1.0 * (2 ** attempt))
-            except requests.exceptions.RequestException as re:
-                last_exception = re
-                time.sleep(1.0 * (2 ** attempt))
-            except ValueError as ve:
-                raise ve
 
-        raise last_exception or ValueError("Failed to generate response after retries.")
+        for model_name in models_to_try:
+            request_url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={api_key}"
+            for attempt in range(max_retries if model_name == models_to_try[0] else 1):
+                try:
+                    response = requests.post(request_url, json=payload, headers=headers, timeout=self.timeout)
+                    if response.status_code == 200:
+                        data = response.json()
+                        candidates = data.get("candidates", [])
+                        if candidates and candidates[0].get("content", {}).get("parts"):
+                            reply = candidates[0]["content"]["parts"][0].get("text", "").strip()
+                            if reply:
+                                return reply
+                    elif response.status_code == 429:
+                        # Rate limit/quota exceeded on this model, break attempt loop to try next model immediately
+                        break
+                    elif response.status_code in (404, 400):
+                        break
+                    elif response.status_code in (401, 403):
+                        raise ValueError(f"Gemini API Authentication Error ({response.status_code}).")
+                except (requests.exceptions.Timeout, requests.exceptions.RequestException) as e:
+                    last_exception = e
+                    continue
+
+        raise last_exception or ValueError("Failed to generate response after retrying available models.")
 
 class LLMService:
     """Main LLM Service orchestrator supporting dynamic system prompts and fallback handling."""
